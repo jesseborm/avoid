@@ -6,6 +6,7 @@ class Title extends Component {
   static propTypes = {
     content: PropTypes.string.isRequired,
   }
+  
   render() {
     return(
       <h1>{ this.props.content }</h1>
