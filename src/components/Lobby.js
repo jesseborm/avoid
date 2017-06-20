@@ -8,9 +8,9 @@ import fetchGames from '../actions/games/fetch'
 import subscribeToGamesService from '../actions/games/subscribe'
 import createGame from '../actions/games/create'
 import removeGame from '../actions/games/remove'
-
-
-
+import Paper from 'material-ui/Paper';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
 
 export class GamesContainer extends PureComponent {
   static propTypes = {
@@ -23,10 +23,11 @@ export class GamesContainer extends PureComponent {
   }
 
   renderGame(game, index) {
-    return <li key={index} { ...game }  />
+    return <MenuItem
+      primaryText={game.title}
+      zDepth={1}
+      key={index} { ...game } />
   }
-
-
 
   renderCreateGameButton() {
     return (
@@ -40,6 +41,14 @@ export class GamesContainer extends PureComponent {
  renderDeleteGameButton() {
     return (
       <RaisedButton
+     onClick={this.props.createGame}
+     label="Create Game"
+     primary={true} />
+  }
+
+  render() {
+    return (
+      <RaisedButton
         onClick={this.props.removeGame}
         label="Delete Game"
         primary={true} />
@@ -48,11 +57,11 @@ export class GamesContainer extends PureComponent {
 
   render() {
     return(
-      <div className="games wrapper">
-        { this.renderCreateGameButton}
-        <ul>
-          { this.props.games.map(this.renderGame.bind(this)) }
-        </ul>
+      <div className="games wrapper">       
+        { this.renderCreateGameButton() }
+        <Menu>
+        { this.props.games.map(this.renderGame) }
+        </Menu>
       </div>
     )
   }
