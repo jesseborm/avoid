@@ -1,17 +1,19 @@
-// src/games/Lobby.js
+// src/games/GamesContainer.js
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import RaisedButton from 'material-ui/RaisedButton'
 import './Lobby.css'
 import fetchGames from '../actions/games/fetch'
 import subscribeToGamesService from '../actions/games/subscribe'
-import RaisedButton from 'material-ui/RaisedButton'
 import createGame from '../actions/games/create'
+import removeGame from '../actions/games/remove'
 
 
-export class Lobby extends PureComponent {
+
+
+export class GamesContainer extends PureComponent {
   static propTypes = {
-    games: PropTypes.array.isRequired,
     fetchGames: PropTypes.func.isRequired,
   }
 
@@ -24,17 +26,30 @@ export class Lobby extends PureComponent {
     return <li key={index} { ...game }  />
   }
 
+
+
   renderCreateGameButton() {
-    return <RaisedButton
-     onTouchTap={this.props.createGame}
-     label="Create Game"
-     primary={true} />
+    return (
+      <RaisedButton
+        onClick={this.props.createGame}
+        label="Create Game"
+        primary={true} />
+    )
+  }
+
+ renderDeleteGameButton() {
+    return (
+      <RaisedButton
+        onClick={this.props.removeGame}
+        label="Delete Game"
+        primary={true} />
+    )
   }
 
   render() {
-    return (
+    return(
       <div className="games wrapper">
-        { this.renderCreateGameButton() }
+        { this.renderCreateGameButton}
         <ul>
           { this.props.games.map(this.renderGame.bind(this)) }
         </ul>
@@ -45,4 +60,6 @@ export class Lobby extends PureComponent {
 
 const mapStateToProps = ({ games }) => ({ games })
 
-export default connect(mapStateToProps, { fetchGames, subscribeToGamesService, createGame })(Lobby)
+export default connect(mapStateToProps, { createGame,
+  fetchGames, subscribeToGamesService
+})(GamesContainer)
