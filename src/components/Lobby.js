@@ -8,10 +8,13 @@ import subscribeToGamesService from '../actions/games/subscribe'
 import RaisedButton from 'material-ui/RaisedButton'
 import createGame from '../actions/games/create'
 
+import Paper from 'material-ui/Paper';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
 
 export class Lobby extends PureComponent {
   static propTypes = {
-    games: PropTypes.array.isRequired,
+    // games: PropTypes.array.isRequired,
     fetchGames: PropTypes.func.isRequired,
   }
 
@@ -21,23 +24,35 @@ export class Lobby extends PureComponent {
   }
 
   renderGame(game, index) {
-    return <li key={index} { ...game }  />
+    return <MenuItem
+      primaryText={game.title}
+      zDepth={1}
+      key={index} { ...game } />
   }
 
   renderCreateGameButton() {
     return <RaisedButton
-     onTouchTap={this.props.createGame}
+     onClick={this.props.createGame}
      label="Create Game"
      primary={true} />
   }
 
+
+
+
+
+
+
+
+
   render() {
+
     return (
       <div className="games wrapper">
         { this.renderCreateGameButton() }
-        <ul>
-          { this.props.games.map(this.renderGame.bind(this)) }
-        </ul>
+        <Menu>
+        { this.props.games.map(this.renderGame) }
+        </Menu>
       </div>
     )
   }
