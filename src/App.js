@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import Loading from './components/Loading'
 import LoadErrorMessage from './components/LoadErrorMessage'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import muiTheme from './styles/theme'
+// import Navigation from './components/Navigation'
 
 import Title from './components/Title'
 import './App.css';
 
 class App extends Component {
+  static childContextTypes = {
+    muiTheme: PropTypes.object.isRequired,
+  }
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div className="App">
           <Title content="Awesome game" />
           <Loading />
           {/* <Navigation /> */}
           {/* { this.props.children } */}
           <LoadErrorMessage />
         </div>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
