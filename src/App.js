@@ -4,7 +4,7 @@ import Loading from './components/Loading'
 import LoadErrorMessage from './components/LoadErrorMessage'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import muiTheme from './styles/theme'
-// import Navigation from './components/Navigation'
+import Navigation from './components/Navigation'
 
 import Title from './components/Title'
 import './App.css';
@@ -18,10 +18,9 @@ class App extends Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="App">
-          <Title content="Awesome game" />
           <Loading />
-          {/* <Navigation /> */}
-          {/* { this.props.children } */}
+          <Navigation />
+          {this.props.children}
           <LoadErrorMessage />
         </div>
       </MuiThemeProvider>
