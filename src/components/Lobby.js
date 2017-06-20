@@ -1,19 +1,20 @@
-// src/games/GamesContainer.js
+// src/games/Lobby.js
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import RaisedButton from 'material-ui/RaisedButton'
 import './Lobby.css'
 import fetchGames from '../actions/games/fetch'
 import subscribeToGamesService from '../actions/games/subscribe'
+import RaisedButton from 'material-ui/RaisedButton'
 import createGame from '../actions/games/create'
-import removeGame from '../actions/games/remove'
+
 import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 
-export class GamesContainer extends PureComponent {
+export class Lobby extends PureComponent {
   static propTypes = {
+    // games: PropTypes.array.isRequired,
     fetchGames: PropTypes.func.isRequired,
   }
 
@@ -30,34 +31,25 @@ export class GamesContainer extends PureComponent {
   }
 
   renderCreateGameButton() {
-    return (
-      <RaisedButton
-        onClick={this.props.createGame}
-        label="Create Game"
-        primary={true} />
-    )
-  }
-
- renderDeleteGameButton() {
-    return (
-      <RaisedButton
+    return <RaisedButton
      onClick={this.props.createGame}
      label="Create Game"
      primary={true} />
   }
 
-  render() {
+  renderDeleteGameButton() {
     return (
       <RaisedButton
-        onClick={this.props.removeGame}
-        label="Delete Game"
-        primary={true} />
+      onClick={this.props.createGame}
+      label="Create Game"
+      primary={true} />
     )
   }
 
   render() {
-    return(
-      <div className="games wrapper">       
+
+    return (
+      <div className="games wrapper">
         { this.renderCreateGameButton() }
         <Menu>
         { this.props.games.map(this.renderGame) }
@@ -69,6 +61,4 @@ export class GamesContainer extends PureComponent {
 
 const mapStateToProps = ({ games }) => ({ games })
 
-export default connect(mapStateToProps, { createGame,
-  fetchGames, subscribeToGamesService
-})(GamesContainer)
+export default connect(mapStateToProps, { fetchGames, subscribeToGamesService, createGame })(Lobby)
