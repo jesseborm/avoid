@@ -1,18 +1,33 @@
+// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import store from './store'
-import registerServiceWorker from './registerServiceWorker';
+import { Router, Route, IndexRoute } from 'react-router'
+import store, { history } from './store'
+import registerServiceWorker from './registerServiceWorker'
+import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import App from './App';
+// import Lobby from './components/Lobby'
 import SignUp from './users/SignUp'
 import SignIn from './users/SignIn'
 
-import './index.css';
+import './index.css'
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin()
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router history={history}>
+      <Route path="/" component={App}>
+        {/* <IndexRoute component={Lobby} /> */}
+        {/* <Route path="/create-game" component={} /> */}
+        <Route path="/sign-in" component={SignIn} />
+        <Route path="/sign-up" component={SignUp} />
+      </Route>
+    </Router>
   </Provider>,
   document.getElementById('root')
 )

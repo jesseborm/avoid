@@ -8,5 +8,5 @@ export default {
   loading,
   loadError,
   games,
-  // currentUser,
+  currentUser,
 }
