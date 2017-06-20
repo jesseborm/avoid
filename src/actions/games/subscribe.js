@@ -11,30 +11,30 @@ const games = api.service('games')
 
 export default () => {
   return (dispatch) => {
-    games.on('created', (game) => { dispatch(createdRecipe(game)) })
-    games.on('updated', (game) => { dispatch(updatedRecipe(game)) })
-    games.on('patched', (game) => { dispatch(updatedRecipe(game)) })
-    games.on('removed', (game) => { dispatch(removedRecipe(game)) })
+    games.on('created', (game) => { dispatch(createdGame(game)) })
+    games.on('updated', (game) => { dispatch(updatedGame(game)) })
+    games.on('patched', (game) => { dispatch(updatedGame(game)) })
+    games.on('removed', (game) => { dispatch(removedGame(game)) })
 
     dispatch({ type: SUBSCRIBED_TO_GAMES_SERVICE })
   }
 }
 
-const createdRecipe = (game) => {
+const createdGame = (game) => {
   return {
     type: GAME_CREATED,
     payload: game
   }
 }
 
-const updatedRecipe = (game) => {
+const updatedGame = (game) => {
   return {
     type: GAME_UPDATED,
     payload: game
   }
 }
 
-const removedRecipe = (game) => {
+const removedGame = (game) => {
   return {
     type: GAME_REMOVED,
     payload: game

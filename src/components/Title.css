@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css?family=Yesteryear");
+.Title {
+  font-family: 'Yesteryear', cursive;
+  font-size: 4em;
+  padding: 10px 2em;
+  margin: 0;
+  color: #4e4e4e; }
+  .Title.level-2 {
+    font-size: 3em; }
