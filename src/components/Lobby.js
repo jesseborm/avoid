@@ -7,8 +7,6 @@ import fetchGames from '../actions/games/fetch'
 import subscribeToGamesService from '../actions/games/subscribe'
 import RaisedButton from 'material-ui/RaisedButton'
 import createGame from '../actions/games/create'
-
-import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -26,8 +24,7 @@ export class Lobby extends PureComponent {
   renderGame(game, index) {
     return <MenuItem
       primaryText={game.title}
-      zDepth={1}
-      key={index} { ...game } />
+      key={index} />
   }
 
   renderCreateGameButton() {
@@ -35,15 +32,6 @@ export class Lobby extends PureComponent {
      onClick={this.props.createGame}
      label="Create Game"
      primary={true} />
-  }
-
-  renderDeleteGameButton() {
-    return (
-      <RaisedButton
-      onClick={this.props.createGame}
-      label="Create Game"
-      primary={true} />
-    )
   }
 
   render() {
