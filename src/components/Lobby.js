@@ -28,12 +28,6 @@ export class Lobby extends PureComponent {
     }
   }
 
-  removeGame(game) {
-    return () => {
-      this.props.removeGame(game)
-    }
-  }
-
   renderGame(game, index) {
     const style = {
       display: 'inline-block',
@@ -52,13 +46,13 @@ export class Lobby extends PureComponent {
             />
             <RaisedButton
               label="Delete Game"
-              onClick={this.removeGame(game)}
+              onClick={() => {this.props.removeGame(game)}}
               primary={true}
             />
           </div> :
           <RaisedButton
             label="Delete Game"
-            onClick={this.removeGame(game)}
+            onClick={() => {this.props.removeGame(game)}}
             primary={true}
           />
         }
