@@ -11,8 +11,9 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 
 export class Lobby extends PureComponent {
+
   static propTypes = {
-    // games: PropTypes.array.isRequired,
+    games: PropTypes.array.isRequired,
     fetchGames: PropTypes.func.isRequired,
   }
 
@@ -29,7 +30,7 @@ export class Lobby extends PureComponent {
 
   renderCreateGameButton() {
     return <RaisedButton
-     onClick={this.props.createGame}
+     onTouchTap={this.props.createGame}
      label="Create Game"
      primary={true} />
   }
@@ -40,7 +41,7 @@ export class Lobby extends PureComponent {
       <div className="games wrapper">
         { this.renderCreateGameButton() }
         <Menu>
-        { this.props.games.map(this.renderGame) }
+          { this.props.games.map(this.renderGame) }
         </Menu>
       </div>
     )
