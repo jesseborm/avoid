@@ -10,13 +10,13 @@ import {
 
 const api = new API()
 
-export default (newGame) => {
+export default (gameId) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
     const backend = api.service('games')
 
-    backend.remove(newGame)
+    backend.remove(gameId)
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })

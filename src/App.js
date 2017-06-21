@@ -19,7 +19,6 @@ class App extends Component {
           <Loading />
           <Navigation />
           {this.props.children}
-
           <LoadErrorMessage />
         </div>
       </MuiThemeProvider>
