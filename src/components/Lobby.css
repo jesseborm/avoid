@@ -1,11 +1,8 @@
-.games.lobby {
-  width: 100%;
-  padding: 24px; }
-  .games.lobby h1 {
+.lobby {
+  max-width: 1040px;
+  padding: 24px;
+  margin: auto; }
+  .lobby h1 {
     text-align: center; }
-  .games.lobby .no-results {
-    display: block;
-    margin: 30% auto;
-    width: 100%;
-    color: #999;
-    text-align: center; }
+  .lobby .games {
+    margin: auto; }

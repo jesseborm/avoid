@@ -1,6 +1,5 @@
 // src/games/Lobby.js
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import './Lobby.css'
@@ -8,7 +7,9 @@ import fetchGames from '../actions/games/fetch'
 import subscribeToGames from '../actions/games/subscribe'
 import RaisedButton from 'material-ui/RaisedButton'
 import createGame from '../actions/games/create'
-import Menu from 'material-ui/Menu';
+import removeGame from '../actions/games/remove'
+
+import Paper from 'material-ui/Paper';
 import MenuItem from 'material-ui/MenuItem';
 
 export class Lobby extends PureComponent {
@@ -27,30 +28,75 @@ export class Lobby extends PureComponent {
     }
   }
 
-  renderGame(game, index) {
-    return <MenuItem
-      primaryText={game.title}
-      key={index} />
+  removeGame(game) {
+    return () => {
+      this.props.removeGame(game)
+    }
   }
 
+  renderGame(game, index) {
+    const style = {
+      display: 'inline-block',
+      margin: '16px 32px 16px 0',
+    };
+    return (
+      <Paper style={style} key={index}>
+        <MenuItem
+          primaryText={game.title}
+        />
+        { game.playerIds.length < 2 ?
+          <div>
+            <RaisedButton
+              label="Join Game"
+              secondary={true}
+            />
+            <RaisedButton
+              label="Delete Game"
+              onClick={this.removeGame(game)}
+              primary={true}
+            />
+          </div> :
+          <RaisedButton
+            label="Delete Game"
+            onClick={this.removeGame(game)}
+            primary={true}
+          />
+        }
+      </Paper>
+    )
+  }
+
+
   renderCreateGameButton() {
-    return <RaisedButton
-     onTouchTap={this.props.createGame}
-     label="Create Game"
-     primary={true} />
+    return (
+      <RaisedButton
+        fullWidth={true}
+        onClick={this.props.createGame}
+        label="Create Game"
+        secondary={true}
+      />
+    )
   }
 
   render() {
-
-    return (
-      <div className="games wrapper">
-        { this.renderCreateGameButton() }
-        <Menu>
-          { this.props.games.map(this.renderGame) }
-        </Menu>
-      </div>
-    )
-  }
+      return (
+        <div className="games lobby">
+          <h1>Welcome to the Game Lobby</h1>
+          { this.props.games.length === 0 ?
+            <div className="no-results">
+              <h2>No Games yet! Feel free to create one!</h2>
+              { this.renderCreateGameButton() }
+            </div> :
+            <div className="games list">
+              <div className="actions">
+                { this.renderCreateGameButton() }
+              </div>
+              { this.props.games.map(this.renderGame.bind(this)) }
+            </div>
+          }
+        </div>
+      )
+    }
 }
 
 const mapStateToProps = ({ games, currentUser, subscriptions }) => ({
@@ -59,4 +105,4 @@ const mapStateToProps = ({ games, currentUser, subscriptions }) => ({
   subscribed: subscriptions.includes('games'),
 })
 
-export default connect(mapStateToProps, { fetchGames, subscribeToGames, push })(Lobby)
+export default connect(mapStateToProps, { fetchGames, subscribeToGames, push, createGame, removeGame })(Lobby)
