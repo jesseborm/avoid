@@ -23,8 +23,8 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-      <IndexRoute component={Lobby} />
-      <Route path="/games/:gameId" component={AvoidGame} />
+        <IndexRoute component={Lobby} />
+        <Route path="/games/:gameId" component={AvoidGame} />
         <Route path="/sign-in" component={SignIn} />
         <Route path="/sign-up" component={SignUp} />
       </Route>
