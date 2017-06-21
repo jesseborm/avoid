@@ -2,9 +2,10 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 import './Lobby.css'
 import fetchGames from '../actions/games/fetch'
-import subscribeToGamesService from '../actions/games/subscribe'
+import subscribeToGames from '../actions/games/subscribe'
 import RaisedButton from 'material-ui/RaisedButton'
 import createGame from '../actions/games/create'
 import Menu from 'material-ui/Menu';
@@ -12,14 +13,18 @@ import MenuItem from 'material-ui/MenuItem';
 
 export class Lobby extends PureComponent {
 
-  static propTypes = {
-    games: PropTypes.array.isRequired,
-    fetchGames: PropTypes.func.isRequired,
+  componentWillMount() {
+    const { subscribed, fetchGames, subscribeToGames } = this.props
+    fetchGames()
+    if (!subscribed) subscribeToGames()
   }
 
-  componentWillMount() {
-    this.props.fetchGames()
-    this.props.subscribeToGamesService()
+  goToGame(gameId) {
+    const { push } = this.props
+
+    return () => {
+      push(`/games/${gameId}`)
+    }
   }
 
   renderGame(game, index) {
@@ -48,6 +53,10 @@ export class Lobby extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ games }) => ({ games })
+const mapStateToProps = ({ games, currentUser, subscriptions }) => ({
+  games,
+  currentUser,
+  subscribed: subscriptions.includes('games'),
+})
 
-export default connect(mapStateToProps, { fetchGames, subscribeToGamesService, createGame })(Lobby)
+export default connect(mapStateToProps, { fetchGames, subscribeToGames, push })(Lobby)
