@@ -40,12 +40,12 @@ export class Lobby extends PureComponent {
           onClick={this.goToGame(game._id)}
         />
         <div>
-          { game.playersId.length < 2 ?
-            <RaisedButton
-              onClick={() => {this.props.joinGame(game._id)}}
-              label="Join Game"
-              secondary={true}
-            /> : null
+          { game.players.length < 2 ?
+          <RaisedButton
+            onClick={() => {this.props.joinGame(game._id)}}
+            label="Join Game"
+            secondary={true}
+          /> : null
           }
           <RaisedButton
             label="Delete Game"

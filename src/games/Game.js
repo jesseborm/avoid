@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Board from '../components/Board'
 import Player from '../components/firstPlayer'
 import SecondPlayer from '../components/secondPlayer'
+import getGame from '../actions/games/get'
 
 // import { pluck } from 'helpers/utils';
 
@@ -12,7 +13,7 @@ const LEFT = 'LEFT';
 const RIGHT = 'RIGHT';
 
 const getDefaultState = ({ boardSize = 25 , playerSize = 25}) => {
-    const half = Math.floor(boardSize / 3) * playerSize;
+    const half = Math.floor(boardSize / 2) * playerSize;
     const half2 = Math.floor(boardSize / 3) * playerSize;
 
     return {
@@ -26,10 +27,6 @@ const getDefaultState = ({ boardSize = 25 , playerSize = 25}) => {
                 top: half,
                 left: half
             },
-            secondPlayer: {
-                top: half2,
-                left: half2
-            },
         }
     }
 };
@@ -39,6 +36,12 @@ class Game extends PureComponent {
         super(props);
         const { boardSize, playerSize } = props;
         this.state = getDefaultState({ boardSize, playerSize })
+    }
+
+    componentWillMount() {
+      const { getGame } = this.props
+      console.log(gameId)
+      // getGame()
     }
 
     handlePlayerMovement = (dirObj) => {
@@ -103,9 +106,9 @@ class Game extends PureComponent {
     }
 }
 
-const mapStateToProps = ({ games, currentUser }) => ({
-  games,
+const mapStateToProps = ({ currentGame, currentUser }) => ({
+  currentGame,
   currentUser,
 })
 
-export default connect(mapStateToProps)(Game)
+export default connect(mapStateToProps, {getGame})(Game)
