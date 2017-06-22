@@ -9,7 +9,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import App from './App';
 import Lobby from './components/Lobby'
-import AvoidGame from './components/AvoidGame'
+// import AvoidGame from './components/AvoidGame'
+import Game from './containers/Game'
 import SignUp from './users/SignUp'
 import SignIn from './users/SignIn'
 
@@ -24,7 +25,7 @@ ReactDOM.render(
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={Lobby} />
-        <Route path="/games/:gameId" component={AvoidGame} />
+        <Route path="/games/:gameId" component={Game} />
         <Route path="/sign-in" component={SignIn} />
         <Route path="/sign-up" component={SignUp} />
       </Route>
