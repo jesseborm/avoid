@@ -23,7 +23,6 @@ export class Lobby extends PureComponent {
 
   goToGame(gameId) {
     const { push } = this.props
-
     return () => {
       push(`/games/${gameId}`)
     }
@@ -38,14 +37,15 @@ export class Lobby extends PureComponent {
       <Paper style={style} key={index}>
         <MenuItem
           primaryText={game.title}
+          onClick={this.goToGame(game._id)}
         />
         <div>
           { game.playersId.length < 2 ?
-          <RaisedButton
-            onClick={() => {this.props.joinGame(game._id)}}
-            label="Join Game"
-            secondary={true}
-          /> : null
+            <RaisedButton
+              onClick={() => {this.props.joinGame(game._id)}}
+              label="Join Game"
+              secondary={true}
+            /> : null
           }
           <RaisedButton
             label="Delete Game"
