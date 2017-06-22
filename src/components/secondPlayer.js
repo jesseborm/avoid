@@ -11,16 +11,16 @@ class SecondPlayer extends Component {
         let newDirection;
 
         switch(e.keyCode) {
-            case 37:
+            case 65:
                 newDirection = { top: 0, left: -1 , dir: LEFT};
                 break;
-            case 38:
+            case 87:
                 newDirection = { top: -1, left: 0 , dir: UP};
                 break;
-            case 39:
+            case 68:
                 newDirection = { top: 0, left: 1, dir: RIGHT};
                 break;
-            case 40:
+            case 83:
                 newDirection = { top: 1, left: 0, dir: DOWN };
                 break;
             default:
