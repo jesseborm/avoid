@@ -6,7 +6,7 @@ const DOWN = 'DOWN';
 const LEFT = 'LEFT';
 const RIGHT = 'RIGHT';
 
-class Player extends Component {
+class SecondPlayer extends Component {
     handleKeyDown = (e) => {
         let newDirection;
 
@@ -34,7 +34,7 @@ class Player extends Component {
         const { size, position: { top, left }} = this.props;
 
         return (
-            <div ref={ n => { this.player = n }} >
+            <div ref={ n => { this.SecondPlayer = n }} >
                 <Square
                     size={size}
                     position={{ top, left }}
@@ -49,7 +49,7 @@ class Player extends Component {
     }
 }
 
-Player.propTypes = {
+SecondPlayer.propTypes = {
     size: PropTypes.number.isRequired,
     position: PropTypes.shape({
         top: PropTypes.number.isRequired,
@@ -57,4 +57,4 @@ Player.propTypes = {
     })
 };
 
-export default Player;
+export default SecondPlayer;
