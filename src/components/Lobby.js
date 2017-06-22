@@ -23,7 +23,6 @@ export class Lobby extends PureComponent {
 
   goToGame(gameId) {
     const { push } = this.props
-
     return () => {
       push(`/games/${gameId}`)
     }
@@ -38,6 +37,7 @@ export class Lobby extends PureComponent {
       <Paper style={style} key={index}>
         <MenuItem
           primaryText={game.title}
+          onClick={this.goToGame(game._id)}
         />
         <div>
           { game.players.length < 2 ?
