@@ -17,7 +17,6 @@ export default (gameId) => {
     dispatch({ type: APP_LOADING })
 
     const backend = api.service('games')
-
     api.app.authenticate()
       .then(() => {
         backend.patch(gameId, { join: true })

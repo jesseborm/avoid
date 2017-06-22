@@ -8,6 +8,7 @@ import subscribeToGames from '../actions/games/subscribe'
 import RaisedButton from 'material-ui/RaisedButton'
 import createGame from '../actions/games/create'
 import removeGame from '../actions/games/remove'
+import joinGame from '../actions/games/join'
 
 import Paper from 'material-ui/Paper';
 import MenuItem from 'material-ui/MenuItem';
@@ -38,24 +39,20 @@ export class Lobby extends PureComponent {
         <MenuItem
           primaryText={game.title}
         />
-        { game.playerIds.length < 2 ?
-          <div>
-            <RaisedButton
-              label="Join Game"
-              secondary={true}
-            />
-            <RaisedButton
-              label="Delete Game"
-              onClick={() => {this.props.removeGame(game)}}
-              primary={true}
-            />
-          </div> :
+        <div>
+          { game.playersId.length < 2 ?
+          <RaisedButton
+            onClick={() => {this.props.joinGame(game._id)}}
+            label="Join Game"
+            secondary={true}
+          /> : null
+          }
           <RaisedButton
             label="Delete Game"
             onClick={() => {this.props.removeGame(game)}}
             primary={true}
           />
-        }
+        </div>
       </Paper>
     )
   }
@@ -99,4 +96,11 @@ const mapStateToProps = ({ games, currentUser, subscriptions }) => ({
   subscribed: subscriptions.includes('games'),
 })
 
-export default connect(mapStateToProps, { fetchGames, subscribeToGames, push, createGame, removeGame })(Lobby)
+export default connect(mapStateToProps, {
+  fetchGames,
+  subscribeToGames,
+  push,
+  createGame,
+  removeGame,
+  joinGame
+})(Lobby)
