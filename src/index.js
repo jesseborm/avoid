@@ -10,7 +10,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import App from './App';
 import Lobby from './components/Lobby'
 // import AvoidGame from './components/AvoidGame'
-import Game from './containers/Game'
+import Game from './games/Game'
 import SignUp from './users/SignUp'
 import SignIn from './users/SignIn'
 
