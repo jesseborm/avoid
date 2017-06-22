@@ -62,7 +62,7 @@ export class Lobby extends PureComponent {
     return (
       <RaisedButton
         fullWidth={true}
-        onClick={this.props.createGame}
+        onClick={() => {this.props.createGame(this.props)}}
         label="Create Game"
         secondary={true}
       />

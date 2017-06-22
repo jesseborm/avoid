@@ -40,8 +40,8 @@ class Game extends PureComponent {
 
     componentWillMount() {
       const { getGame } = this.props
-      console.log(gameId)
-      // getGame()
+      const { gameId } = this.props.params
+      getGame(gameId)
     }
 
     handlePlayerMovement = (dirObj) => {
