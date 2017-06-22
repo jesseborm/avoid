@@ -40,7 +40,7 @@ class Game extends PureComponent {
 
     componentWillMount() {
       const { getGame } = this.props
-      console.log(gameId)
+      // console.log(gameId)
       // getGame()
     }
 
