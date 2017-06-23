@@ -4,7 +4,7 @@ import Board from '../components/Board'
 import Player from '../components/firstPlayer'
 // import SecondPlayer from '../components/secondPlayer'
 import fetchGames from '../actions/games/fetch'
-// import subscribeToGames from '../actions/games/subscribe'
+import subscribeToGames from '../actions/games/subscribe'
 import getGame from '../actions/games/get'
 import './Game.css'
 
@@ -23,13 +23,13 @@ class Game extends PureComponent {
   const { game,
     fetchGames,
     getGame,
-    // subscribed,
-    // subscribeToGames
+    subscribed,
+    subscribeToGames
   } = this.props
   const { gameId } = this.props.params
   if (!game) fetchGames()
   getGame(gameId)
-  // if (!subscribed) subscribeToGames()
+  if (!subscribed) subscribeToGames()
  }
 
 
@@ -76,7 +76,7 @@ const mapStateToProps = ({
   currentUser,
   currentGame,
   games,
-  // subscriptions
+  subscriptions
 }) => {
   const game = games.filter((g) => (g._id === currentGame))[0]
 
@@ -90,6 +90,6 @@ const mapStateToProps = ({
 
 export default connect(mapStateToProps, {
   fetchGames,
-  // subscribeToGames,
+  subscribeToGames,
   getGame
 })(Game)
