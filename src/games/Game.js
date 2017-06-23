@@ -5,6 +5,9 @@ import Player from '../components/firstPlayer'
 // import SecondPlayer from '../components/secondPlayer'
 import getGame from '../actions/games/get'
 import changePosition from '../actions/games/change-position'
+import '../components/Square.css'
+
+
 
 // import { pluck } from 'helpers/utils';
 
@@ -39,11 +42,13 @@ class Game extends PureComponent {
     this.state = getDefaultState({ boardSize, playerSize })
   }
 
-  componentWillMount() {
-    const { getGame } = this.props
-    // console.log(gameId)
-    // getGame()
-  }
+ componentWillMount() {
+      const { getGame } = this.props
+      const { gameId } = this.props.params
+      getGame(gameId)
+    }
+
+
 
   handlePlayerMovement = (dirObj) => {
     const { top, left } = this.state.positions.player;
@@ -63,19 +68,8 @@ class Game extends PureComponent {
       case RIGHT:
         if (left === maxDim - player) return;
         break;
-    }
 
 
-
-    const {
-      positions: {
-        ...this.state.positions,
-        player: {
-          top: top + (player * dirObj.top),
-          left: left + (player * dirObj.left)
-        }
-      }
-    })
 
     this.setState({
       positions: {
