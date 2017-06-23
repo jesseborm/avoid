@@ -4,6 +4,8 @@ import Board from '../components/Board'
 import Player from '../components/firstPlayer'
 import SecondPlayer from '../components/secondPlayer'
 import getGame from '../actions/games/get'
+import '../components/Square.css'
+
 
 // import { pluck } from 'helpers/utils';
 
