@@ -19,9 +19,28 @@ const api = new API()
 export default (gameId) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
+    console.log("change-position action::: " + gameId);
 
-      const backend = api.service('games')
-      backend.patch(gameId, {  })
+    const backend = api.service('games')
+
+    backend.patch(gameId) //position from playerId
+    .then((result) => {
+      dispatch({ type: APP_DONE_LOADING })
+      dispatch({ type: LOAD_SUCCESS })
+
+      dispatch({
+        type: MOVE_UP,
+        payload: result
+      })
+    })
+
+    .catch((error) => {
+      dispatch({ type: APP_DONE_LOADING })
+      dispatch({
+        type: LOAD_ERROR,
+        payload: error.message
+      })
+    })
 
 
   }

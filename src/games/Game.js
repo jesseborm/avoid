@@ -2,8 +2,9 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
 import Board from '../components/Board'
 import Player from '../components/firstPlayer'
-import SecondPlayer from '../components/secondPlayer'
+// import SecondPlayer from '../components/secondPlayer'
 import getGame from '../actions/games/get'
+import changePosition from '../actions/games/change-position'
 
 // import { pluck } from 'helpers/utils';
 
@@ -14,7 +15,7 @@ const RIGHT = 'RIGHT';
 
 const getDefaultState = ({ boardSize = 25 , playerSize = 25}) => {
     const half = Math.floor(boardSize / 2) * playerSize;
-    const half2 = Math.floor(boardSize / 3) * playerSize;
+    // const half2 = Math.floor(boardSize / 3) * playerSize;
 
     return {
         size: {
@@ -32,48 +33,60 @@ const getDefaultState = ({ boardSize = 25 , playerSize = 25}) => {
 };
 
 class Game extends PureComponent {
-    constructor(props) {
-        super(props);
-        const { boardSize, playerSize } = props;
-        this.state = getDefaultState({ boardSize, playerSize })
+  constructor(props) {
+    super(props);
+    const { boardSize, playerSize } = props;
+    this.state = getDefaultState({ boardSize, playerSize })
+  }
+
+  componentWillMount() {
+    const { getGame } = this.props
+    // console.log(gameId)
+    // getGame()
+  }
+
+  handlePlayerMovement = (dirObj) => {
+    const { top, left } = this.state.positions.player;
+    const { player, maxDim } = this.state.size;
+
+    // check walls
+    switch (dirObj.dir) {
+      case UP:
+        if (top === 0) return;
+        break;
+      case DOWN:
+        if (top === maxDim - player) return;
+        break;
+      case LEFT:
+        if (left === 0) return;
+        break;
+      case RIGHT:
+        if (left === maxDim - player) return;
+        break;
     }
 
-    componentWillMount() {
-      const { getGame } = this.props
-      // console.log(gameId)
-      // getGame()
-    }
 
-    handlePlayerMovement = (dirObj) => {
-        const { top, left } = this.state.positions.player;
-        const { player, maxDim } = this.state.size;
 
-        // check walls
-        switch (dirObj.dir) {
-            case UP:
-                if (top === 0) return;
-                break;
-            case DOWN:
-                if (top === maxDim - player) return;
-                break;
-            case LEFT:
-                if (left === 0) return;
-                break;
-            case RIGHT:
-                if (left === maxDim - player) return;
-                break;
+    const {
+      positions: {
+        ...this.state.positions,
+        player: {
+          top: top + (player * dirObj.top),
+          left: left + (player * dirObj.left)
         }
+      }
+    })
 
-        this.setState({
-            positions: {
-                ...this.state.positions,
-                player: {
-                    top: top + (player * dirObj.top),
-                    left: left + (player * dirObj.left)
-                }
-            }
-        });
-    }
+    this.setState({
+      positions: {
+        ...this.state.positions,
+        player: {
+          top: top + (player * dirObj.top),
+          left: left + (player * dirObj.left)
+        }
+      }
+    })
+  }
 
     style = () => {
         return {
@@ -91,16 +104,16 @@ class Game extends PureComponent {
 
         return (
             <div style={this.style()}>
-                <Board dimension={board * player}>
-                    <Player
-                        size={player}
-                        position={playerPos}
-                        handlePlayerMovement={this.handlePlayerMovement} />
-                    <SecondPlayer
-                        size={player}
-                        position={playerPos}
-                        handlePlayerMovement={this.handlePlayerMovement} />
-                </Board>
+              <Board dimension={board * player}>
+                <Player
+                  size={player}
+                  position={playerPos}
+                  handlePlayerMovement={this.handlePlayerMovement} />
+                {/* <SecondPlayer
+                  size={player}
+                  position={playerPos}
+                handlePlayerMovement={this.handlePlayerMovement} /> */}
+              </Board>
             </div>
         )
     }
@@ -111,4 +124,4 @@ const mapStateToProps = ({ currentGame, currentUser }) => ({
   currentUser,
 })
 
-export default connect(mapStateToProps, {getGame})(Game)
+export default connect(mapStateToProps, { getGame, changePosition })(Game)
