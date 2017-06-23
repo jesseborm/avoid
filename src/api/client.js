@@ -6,6 +6,10 @@ import auth from 'feathers-authentication-client'
 import io from 'socket.io-client/dist/socket.io'
 
 const host = 'http://localhost:3030'
+// const host = 'http://avoid-api-app.feathersjs.com'
+// const host = process.env.API_HOST || 'http://avoid-api.codaisseur.cloud/'
+// const host = 'http://avoid-api.codaisseur.cloud/'
+
 export const FEATHERS_TOKEN_KEY = 'avoidKey'
 
 const socket = io(host, {

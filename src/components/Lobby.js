@@ -41,7 +41,7 @@ export class Lobby extends PureComponent {
         />
         <div>
           { game.players.length < 2 ?
-          <RaisedButton
+            <RaisedButton
             onClick={() => {this.props.joinGame(game._id)}}
             label="Join Game"
             secondary={true}
