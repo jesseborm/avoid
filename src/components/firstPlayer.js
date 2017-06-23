@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import fetchGames from '../actions/games/fetch'
+import subscribeToGames from '../actions/games/subscribe'
+import getGame from '../actions/games/get'
 import Square from '../components/Square'
 
 const UP = 'UP';
@@ -7,13 +10,10 @@ const DOWN = 'DOWN';
 const LEFT = 'LEFT';
 const RIGHT = 'RIGHT';
 
-class Player extends Component {
-  static propTypes = {
-    size: PropTypes.number.isRequired,
-    position: PropTypes.shape({
-      top: PropTypes.number.isRequired,
-      left: PropTypes.number.isRequired
-    })
+class Player extends PureComponent {
+
+  componentWillMount() {
+   const { game, currentPlayerPosition} = this.props
   }
 
   componentDidMount() {
@@ -41,16 +41,24 @@ class Player extends Component {
     }
 
     this.props.handlePlayerMovement(newDirection);
+    const left = this.props.currentPlayerPosition && this.props.currentPlayerPosition.top
+    const top = this.props.currentPlayerPosition && this.props.currentPlayerPosition.left
+    console.log(left)
+    console.log(top)
   }
 
   render() {
-    const { size, position: { top, left }} = this.props;
+    const left = this.props.currentPlayerPosition && this.props.currentPlayerPosition.top
+    const top = this.props.currentPlayerPosition && this.props.currentPlayerPosition.left
+    console.log(left)
+    console.log(top)
+    // const { position: { top, left }} = this.props;
 
     return (
       <div ref={ n => { this.player = n }} >
         <Square
-          size={size}
-          position={{ top, left }}
+          size={25}
+          position={{top, left}}
           color='red'
         />
       </div>
@@ -60,6 +68,20 @@ class Player extends Component {
 
 }
 
+const mapStateToProps = ({ currentUser, currentGame, games, subscriptions }) => {
+  const game = games.filter((g) => (g._id === currentGame))[0]
 
+  return {
+    game,
+    currentUser,
+    currentPlayerPosition: game && game.players.filter((p) =>
+      (p.userId === currentUser._id))[0].position,
+    subscribed: subscriptions.includes('games'),
+  }
+}
 
-export default Player;
+export default connect(mapStateToProps, {
+  fetchGames,
+  subscribeToGames,
+  getGame
+})(Player)
