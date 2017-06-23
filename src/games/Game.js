@@ -7,7 +7,6 @@ import fetchGames from '../actions/games/fetch'
 // import subscribeToGames from '../actions/games/subscribe'
 import getGame from '../actions/games/get'
 import './Game.css'
-import '../components/Square.css'
 
 const UP = 'UP'
 const DOWN = 'DOWN'
@@ -21,7 +20,12 @@ class Game extends PureComponent {
   }
 
  componentWillMount() {
-  const { game, fetchGames, getGame } = this.props
+  const { game,
+    fetchGames,
+    getGame,
+    // subscribed,
+    // subscribeToGames
+  } = this.props
   const { gameId } = this.props.params
   if (!game) fetchGames()
   getGame(gameId)
@@ -30,10 +34,6 @@ class Game extends PureComponent {
 
 
   handlePlayerMovement = (dirObj) => {
-    // console.log(this.props.currentPlayerPosition)
-    // console.log(this.state)
-
-
     const { top, left } = this.props.currentPlayerPosition
     // check walls
     switch (dirObj.dir) {
@@ -72,7 +72,12 @@ class Game extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ currentUser, currentGame, games }) => {
+const mapStateToProps = ({
+  currentUser,
+  currentGame,
+  games,
+  // subscriptions
+}) => {
   const game = games.filter((g) => (g._id === currentGame))[0]
 
   return {
@@ -85,5 +90,6 @@ const mapStateToProps = ({ currentUser, currentGame, games }) => {
 
 export default connect(mapStateToProps, {
   fetchGames,
+  // subscribeToGames,
   getGame
 })(Game)

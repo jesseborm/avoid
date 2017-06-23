@@ -18,7 +18,6 @@ const api = new API()
 export default (gameId, newDirection) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
-    console.log("change-position action::: " + gameId + newDirection);
 
     const backend = api.service('games')
 

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import fetchGames from '../actions/games/fetch'
 import subscribeToGames from '../actions/games/subscribe'
 import getGame from '../actions/games/get'
-import Square from '../components/Square'
 import changePosition from '../actions/games/change-position'
 
 
@@ -13,7 +12,6 @@ const LEFT = 'LEFT'
 const RIGHT = 'RIGHT'
 
 class Player extends PureComponent {
-
   componentWillMount() {
    const { game, currentPlayerPosition} = this.props
   }
@@ -44,26 +42,22 @@ class Player extends PureComponent {
 
     this.props.handlePlayerMovement(newDirection)
     this.props.changePosition(this.props.currentGame, newDirection)
-    console.log(this.props.currentGame)
-    if (this.props.currentPlayerPosition) {
-      console.log(this.props.currentPlayerPosition.top)
-      console.log(this.props.currentPlayerPosition.left)
-    }
+    console.log(this.props.currentPlayerPosition.top)
+    console.log(this.props.currentPlayerPosition.left)
+  }
 
+  style = () => {
+    return {
+        top: '300px',
+        left: '300px',
+    }
   }
 
   render() {
-    const top = this.props.currentPlayerPosition && this.props.currentPlayerPosition.top
-    const left = this.props.currentPlayerPosition && this.props.currentPlayerPosition.left
     return (
       <div ref={ n => { this.player = n }} >
-        <Square
-          size={25}
-          position={{top, left}}
-          color='red'
-        />
+        <div id="character" style={this.style()}/>
       </div>
-
     )
   }
 
