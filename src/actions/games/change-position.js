@@ -14,16 +14,15 @@ export const MOVE_LEFT = "MOVE_LEFT"
 export const MOVE_RIGHT = "MOVE_RIGHT"
 
 const api = new API()
-// const playerId = currentGame.playerId
 
-export default (gameId) => {
+export default (gameId, newDirection) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
-    console.log("change-position action::: " + gameId);
+    console.log("change-position action::: " + gameId + newDirection);
 
     const backend = api.service('games')
 
-    backend.patch(gameId) //position from playerId
+    backend.patch(gameId, newDirection) //position from playerId
     .then((result) => {
       dispatch({ type: APP_DONE_LOADING })
       dispatch({ type: LOAD_SUCCESS })

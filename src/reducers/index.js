@@ -5,7 +5,6 @@ import loadError from './loadError'
 import currentUser from './currentUser'
 import currentGame from './currentGame'
 import subscriptions from './subscriptions'
-import playerPosition from './playerPosition'
 
 export default {
   games,
@@ -14,5 +13,4 @@ export default {
   currentUser,
   currentGame,
   subscriptions,
-  playerPosition,
 }

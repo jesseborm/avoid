@@ -4,11 +4,13 @@ import fetchGames from '../actions/games/fetch'
 import subscribeToGames from '../actions/games/subscribe'
 import getGame from '../actions/games/get'
 import Square from '../components/Square'
+import changePosition from '../actions/games/change-position'
 
-const UP = 'UP';
-const DOWN = 'DOWN';
-const LEFT = 'LEFT';
-const RIGHT = 'RIGHT';
+
+const UP = 'UP'
+const DOWN = 'DOWN'
+const LEFT = 'LEFT'
+const RIGHT = 'RIGHT'
 
 class Player extends PureComponent {
 
@@ -17,43 +19,42 @@ class Player extends PureComponent {
   }
 
   componentDidMount() {
-    window.onkeydown = this.handleKeyDown;
+    window.onkeydown = this.handleKeyDown
   }
 
   handleKeyDown = (e) => {
-    let newDirection;
+    let newDirection
 
     switch(e.keyCode) {
       case 37:
-        newDirection = { top: 0, left: -1 , dir: LEFT};
-        break;
+        newDirection = { top: 0, left: -1 , dir: LEFT}
+        break
       case 38:
-        newDirection = { top: -1, left: 0 , dir: UP};
-        break;
+        newDirection = { top: -1, left: 0 , dir: UP}
+        break
       case 39:
-        newDirection = { top: 0, left: 1, dir: RIGHT};
-        break;
+        newDirection = { top: 0, left: 1, dir: RIGHT}
+        break
       case 40:
-        newDirection = { top: 1, left: 0, dir: DOWN };
-        break;
+        newDirection = { top: 1, left: 0, dir: DOWN }
+        break
       default:
-        return;
+        return
     }
 
-    this.props.handlePlayerMovement(newDirection);
-    const left = this.props.currentPlayerPosition && this.props.currentPlayerPosition.top
-    const top = this.props.currentPlayerPosition && this.props.currentPlayerPosition.left
-    console.log(left)
-    console.log(top)
+    this.props.handlePlayerMovement(newDirection)
+    this.props.changePosition(this.props.currentGame, newDirection)
+    console.log(this.props.currentGame)
+    if (this.props.currentPlayerPosition) {
+      console.log(this.props.currentPlayerPosition.top)
+      console.log(this.props.currentPlayerPosition.left)
+    }
+
   }
 
   render() {
-    const left = this.props.currentPlayerPosition && this.props.currentPlayerPosition.top
-    const top = this.props.currentPlayerPosition && this.props.currentPlayerPosition.left
-    console.log(left)
-    console.log(top)
-    // const { position: { top, left }} = this.props;
-
+    const top = this.props.currentPlayerPosition && this.props.currentPlayerPosition.top
+    const left = this.props.currentPlayerPosition && this.props.currentPlayerPosition.left
     return (
       <div ref={ n => { this.player = n }} >
         <Square
@@ -63,7 +64,7 @@ class Player extends PureComponent {
         />
       </div>
 
-    );
+    )
   }
 
 }
@@ -73,6 +74,7 @@ const mapStateToProps = ({ currentUser, currentGame, games, subscriptions }) => 
 
   return {
     game,
+    currentGame,
     currentUser,
     currentPlayerPosition: game && game.players.filter((p) =>
       (p.userId === currentUser._id))[0].position,
@@ -81,7 +83,5 @@ const mapStateToProps = ({ currentUser, currentGame, games, subscriptions }) => 
 }
 
 export default connect(mapStateToProps, {
-  fetchGames,
-  subscribeToGames,
-  getGame
+  changePosition
 })(Player)

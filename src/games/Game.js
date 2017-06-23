@@ -4,9 +4,8 @@ import Board from '../components/Board'
 import Player from '../components/firstPlayer'
 // import SecondPlayer from '../components/secondPlayer'
 import fetchGames from '../actions/games/fetch'
-import subscribeToGames from '../actions/games/subscribe'
+// import subscribeToGames from '../actions/games/subscribe'
 import getGame from '../actions/games/get'
-import changePosition from '../actions/games/change-position'
 import './Game.css'
 import '../components/Square.css'
 
@@ -15,29 +14,18 @@ const DOWN = 'DOWN'
 const LEFT = 'LEFT'
 const RIGHT = 'RIGHT'
 
-const getDefaultState = () => {
-    return {
-        positions: {
-            player: {
-                top: 300,
-                left: 300
-            },
-        }
-    }
-}
 
 class Game extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = getDefaultState()
   }
 
  componentWillMount() {
-  const { game, fetchGames, getGame, subscribeToGames, subscribed, currentPlayerPosition } = this.props
+  const { game, fetchGames, getGame } = this.props
   const { gameId } = this.props.params
   if (!game) fetchGames()
   getGame(gameId)
-  if (!subscribed) subscribeToGames()
+  // if (!subscribed) subscribeToGames()
  }
 
 
@@ -69,14 +57,13 @@ class Game extends PureComponent {
   }
 
   render() {
-      const { positions: { player: playerPos } } = this.state
+      const playerPos= this.props.currentPlayerPosition
 
       return (
           <div className="board">
             <Board dimension={625}>
               <Player
                 size={25}
-                position={playerPos}
                 handlePlayerMovement={this.handlePlayerMovement} />
             </Board>
           </div>
@@ -85,7 +72,7 @@ class Game extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ currentUser, currentGame, games, subscriptions }) => {
+const mapStateToProps = ({ currentUser, currentGame, games }) => {
   const game = games.filter((g) => (g._id === currentGame))[0]
 
   return {
@@ -93,12 +80,10 @@ const mapStateToProps = ({ currentUser, currentGame, games, subscriptions }) => 
     currentUser,
     currentPlayerPosition: game && game.players.filter((p) =>
       (p.userId === currentUser._id))[0].position,
-    subscribed: subscriptions.includes('games'),
   }
 }
 
 export default connect(mapStateToProps, {
   fetchGames,
-  subscribeToGames,
   getGame
 })(Game)
