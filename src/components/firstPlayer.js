@@ -4,6 +4,8 @@ import fetchGames from '../actions/games/fetch'
 import subscribeToGames from '../actions/games/subscribe'
 import getGame from '../actions/games/get'
 import changePosition from '../actions/games/change-position'
+import Square from '../components/square'
+
 
 
 const UP = 'UP'
@@ -13,9 +15,9 @@ const RIGHT = 'RIGHT'
 
 class Player extends PureComponent {
   componentWillMount() {
-   const { game, currentPlayerPosition} = this.props
+    const { subscribed, subscribeToGames} = this.props
+    if (!subscribed) subscribeToGames()
   }
-
   componentDidMount() {
     window.onkeydown = this.handleKeyDown
   }
@@ -46,18 +48,20 @@ class Player extends PureComponent {
     console.log(this.props.currentPlayerPosition.left)
   }
 
-  style = () => {
-    return {
-        top: '300px',
-        left: '300px',
-    }
-  }
-
   render() {
+    const { currentPlayerPosition } = this.props;
+
+    console.log(this.props)
+
+    if (!currentPlayerPosition) return null
+
+    const { top, left } = currentPlayerPosition
+
     return (
       <div ref={ n => { this.player = n }} >
-        <div id="character" style={this.style()}/>
+        <Square position={{ top, left }} />
       </div>
+
     )
   }
 
@@ -77,5 +81,6 @@ const mapStateToProps = ({ currentUser, currentGame, games, subscriptions }) => 
 }
 
 export default connect(mapStateToProps, {
-  changePosition
+  changePosition,
+  subscribeToGames,
 })(Player)

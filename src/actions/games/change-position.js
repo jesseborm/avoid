@@ -21,24 +21,23 @@ export default (gameId, newDirection) => {
 
     const backend = api.service('games')
 
-    backend.patch(gameId, newDirection) //position from playerId
-    .then((result) => {
-      dispatch({ type: APP_DONE_LOADING })
-      dispatch({ type: LOAD_SUCCESS })
+    api.app.authenticate()
+      .then(() => {
+        backend.patch(gameId, newDirection) //position from playerId
+        .then((result) => {
+          dispatch({ type: APP_DONE_LOADING })
+          dispatch({ type: LOAD_SUCCESS })
+        })
 
-      dispatch({
-        type: MOVE_UP,
-        payload: result
+        .catch((error) => {
+          dispatch({ type: APP_DONE_LOADING })
+          dispatch({
+            type: LOAD_ERROR,
+            payload: error.message
+          })
+        })
       })
-    })
 
-    .catch((error) => {
-      dispatch({ type: APP_DONE_LOADING })
-      dispatch({
-        type: LOAD_ERROR,
-        payload: error.message
-      })
-    })
 
 
   }
